@@ -1,25 +1,45 @@
 from django.shortcuts import render
 from MiniCopro.models import Annonce
-import numpy as np
+import requests
+import numpy 
 
-def stats_view(request):
+def MiniApi(request):
     result = None
+    message = None
 
-    # filter_type = request.GET.get("type")
-    # value = request.GET.get("value")
+    if request.method == "GET":
+        filter_type = request.GET.get("type")
+        value = request.GET.get("value")
 
-    filter_type = request.GET("type")
-    value = request.GET("value")
+        if filter_type and value:
+            annonces = Annonce.objects.filter(**{filter_type: value})
+            expenses = []
+            for annonce in annonces:
+                if annonce.condominium_expenses is not None:
+                    expenses.append(annonce.condominium_expenses)
 
-    if filter_type and value:
-        annonces = Annonce.objects.filter(**{filter_type: value})
-        expenses = [a.condominium_expenses for a in annonces if a.condominium_expenses is not None]
-
-        if expenses:
-            result = {
-                "average": round(np.mean(expenses), 2),
-                "q10": round(np.percentile(expenses, 10), 2),
-                "q90": round(np.percentile(expenses, 90), 2)
-            }
-
-    return render(request, "dashboard.html", {"result": result})
+            if expenses:
+                result = {
+                    "average": round(numpy.mean(expenses), 2),
+                    "q10": round(numpy.percentile(expenses, 10), 2),
+                    "q90": round(numpy.percentile(expenses, 90), 2)
+                }
+    elif request.method == "POST":
+        url = request.POST.get("url")
+        try:
+            annonceId = url.split("/")[-1]
+            apiUrl  = f"https://www.bienici.com/realEstateAd.json?id={annonceId}"
+            response = requests.get(apiUrl)
+            if response.status_code == 200:
+                data = response.json()
+                annonce = Annonce(
+                    zip_code=data.get("postalCode"),
+                    city=data.get("city"),
+                    dept_code=data.get("departmentCode"),
+                    condominium_expenses=data.get("annualCondominiumFees"))
+                annonce.save()
+                message = "Annonce ajoutée avec succès."
+        except Exception as e:
+            message = f"Erreur : {e}"
+    
+    return render(request, "dashboard.html", {"result": result, "message": message})

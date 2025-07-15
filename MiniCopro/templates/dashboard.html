@@ -12,7 +12,7 @@
             <option value="city">Ville</option>
             <option value="zip_code">Code postal</option>
         </select>
-        <input type="text" name="value" placeholder="Valeur (ex: 75 ou Paris)">
+        <input type="text" name="value" placeholder="Entrez la valeur">
         <button type="submit">Calculer</button>
     </form>
 
@@ -21,6 +21,17 @@
         <p>Moyenne : {{ result.average }}</p>
         <p>Quantile 10% : {{ result.q10 }}</p>
         <p>Quantile 90% : {{ result.q90 }}</p>
+    {% endif %}
+
+    <h2>Ajouter une url</h2>
+
+    <form method="post">
+    {% csrf_token %}
+    <input type="text" name="url" placeholder="Coller l’URL bienici">
+    <button type="submit">Ajouter l’annonce</button>
+    </form>
+    {% if message %}
+        <p>{{ message }}</p>
     {% endif %}
 </body>
 </html>

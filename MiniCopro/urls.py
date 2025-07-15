@@ -1,6 +1,5 @@
 from django.urls import path
-from MiniCopro.views import stats_view
-
+from MiniCopro.views import MiniApi
 urlpatterns = [
-    path("dashboard/", stats_view, name="dashboard"),
+    path("", MiniApi, name="dashboard.html"),
 ]

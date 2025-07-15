@@ -89,7 +89,7 @@ def read_csv_and_import_data(path):
 
 def main():
     get_django_settings()
-    read_csv_and_import_data("scripts/split_1 - Copie.csv")
+    read_csv_and_import_data("scripts/data.csv")
 
 if __name__ == "__main__":
     main()
