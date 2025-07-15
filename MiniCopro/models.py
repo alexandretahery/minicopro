@@ -1,0 +1,47 @@
+from django.db import models
+
+# Create your models here.
+class Annonce(models.Model):
+    id = models.AutoField(primary_key=True)
+    ad_urls = models.TextField()
+    property_type = models.CharField(max_length=100)
+    dept_code = models.CharField(max_length=10)
+    zip_code = models.CharField(max_length=10)
+    city = models.CharField(max_length=100)
+    insee_code = models.CharField(max_length=10)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    blur_radius = models.FloatField(null=True, blank=True)
+    marketing_type = models.CharField(max_length=100)
+    price = models.FloatField()
+    description = models.TextField(null=True, blank=True)
+    surface = models.FloatField(null=True, blank=True)
+    condominium_expenses = models.FloatField(null=True, blank=True)
+    caretaker = models.BooleanField(null=True, blank=True)
+    heating_mode = models.CharField(max_length=100, null=True, blank=True)
+    water_heating_mode = models.CharField(max_length=100, null=True, blank=True)
+    elevator = models.BooleanField(null=True, blank=True)
+    floor = models.IntegerField(null=True, blank=True)
+    floor_count = models.IntegerField(null=True, blank=True)
+    lot_count = models.IntegerField(null=True, blank=True)
+    construction_year = models.IntegerField(null=True, blank=True)
+    building_type = models.CharField(max_length=100, null=True, blank=True)
+    parking = models.BooleanField(null=True, blank=True)
+    parking_count = models.IntegerField(null=True, blank=True)
+    terrace = models.BooleanField(null=True, blank=True)
+    terrace_surface = models.FloatField(null=True, blank=True)
+    swimming_pool = models.BooleanField(null=True, blank=True)
+    garden = models.BooleanField(null=True, blank=True)
+    standing = models.CharField(max_length=100, null=True, blank=True)
+    new_build = models.BooleanField(null=True, blank=True)
+    small_building = models.BooleanField(null=True, blank=True)
+    corner_building = models.BooleanField(null=True, blank=True)
+    publication_start_date = models.DateField(null=True, blank=True)
+    dealer_name = models.CharField(max_length=255)
+    dealer_type = models.CharField(max_length=100)
+    reference_number = models.CharField(max_length=100, null=True, blank=True)
+    energy_classification = models.CharField(max_length=10, null=True, blank=True)
+
+
+    def __str__(self):
+        return self.title

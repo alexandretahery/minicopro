@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statistiques de copropriété</title>
+</head>
+<body>
+    <h1>Statistiques</h1>
+    <form method="get">
+        <label>Filtrer par :</label>
+        <select name="type">
+            <option value="dept_code">Département</option>
+            <option value="city">Ville</option>
+            <option value="zip_code">Code postal</option>
+        </select>
+        <input type="text" name="value" placeholder="Valeur (ex: 75 ou Paris)">
+        <button type="submit">Calculer</button>
+    </form>
+
+    {% if result %}
+        <h2>Résultats :</h2>
+        <p>Moyenne : {{ result.average }}</p>
+        <p>Quantile 10% : {{ result.q10 }}</p>
+        <p>Quantile 90% : {{ result.q90 }}</p>
+    {% endif %}
+</body>
+</html>
